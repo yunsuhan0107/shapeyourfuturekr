@@ -787,6 +787,8 @@ input.btn:focus { border-width: 2px; }
 .btn.btn-olivine-green:hover, .btn.btn-olivine-green:focus { background: transparent; color: #8bb867; }
 .btn.btn-sky-blue { background: #2e94eb; border-color: #2e94eb; color: #ffffff; }
 .btn.btn-sky-blue:hover, .btn.btn-sky-blue:focus { background: transparent; color: #2e94eb; }
+.btn.btn-bright-sky-blue { background: #6cb4f1; border-color: #6cb4f1; color: #ffffff; }
+.btn.btn-bright-sky-blue:hover, .btn.btn-sky-blue:focus { background: transparent; color: #6cb4f1; }
 .btn.btn-yellow-ochre { background: #c89965; border-color: #c89965; color: #ffffff; }
 .btn.btn-yellow-ochre:hover, .btn.btn-yellow-ochre:focus { background: transparent; color: #c89965; }
 .btn.btn-fast-yellow { background: #F4D956; border-color: #F4D956; color: #232323; }
@@ -4560,7 +4562,7 @@ footer .instafeed-grid.gutter-double-extra-large { margin-left: -20px; margin-ri
 .home-startup .ares:hover { background: rgba(0,0,0,0.9); }
 .home-startup .rs-btn:hover div,.home-startup .rs-btn:hover .fa-play { transition: 0.3s ease-in-out !important; }
 .home-startup .rs-btn:hover div { background: #fff !important; }
-.home-startup .rs-btn:hover .fa-play { color: #00B057 !important; }
+.home-startup .rs-btn:hover .fa-play { color: #2e94eb !important; }
 .home-startup .tp-mask-wrap { display: inline !important; }
 .home-startup .tp-bullet .tp-bullet-image, .home-startup .tp-bullet .tp-bullet-title { display: none !important; }
 .footer-startup.footer-light a:hover { color: #27ae60;}
