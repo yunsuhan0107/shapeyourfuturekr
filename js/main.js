@@ -2035,48 +2035,46 @@
         }
     }
 
-    window.addEventListener("DOMContentLoaded", function () {
-      // get the form elements defined in your form HTML above
+    /***** Submit form using AJAX *****/
+    function submitAJAXForm( _this ) {
 
-      var form = document.getElementById("my-form");
-      // var button = document.getElementById("my-form-button");
-      var status = document.getElementById("status");
+        var formObj     = _this.parents( 'form' ),
+            actionURL   = formObj.attr( 'action' ),
+            resultsObj  = formObj.find( '.form-results' ),
+            redirectVal = formObj.find( '[name="redirect"]' ).val();
 
-      // Success and Error functions for after the form is submitted
-
-      function success() {
-        form.reset();
-        status.classList.add("success");
-        status.innerHTML = "Thanks!";
-      }
-
-      function error() {
-        status.classList.add("error");
-        status.innerHTML = "Oops! There was a problem.";
-      }
-
-      // handle the form submission event
-
-      form.addEventListener("submit", function (ev) {
-        ev.preventDefault();
-        var data = new FormData(form);
-        ajax(form.method, form.action, data, success, error);
-      });
-    });
-
-    // helper function for sending an AJAX request
-
-    function ajax(method, url, data, success, error) {
-      var xhr = new XMLHttpRequest();
-      xhr.open(method, url);
-      xhr.setRequestHeader("Accept", "application/json");
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState !== XMLHttpRequest.DONE) return;
-        if (xhr.status === 200) {
-          success(xhr.response, xhr.responseType);
-        } else {
-          error(xhr.status, xhr.response, xhr.responseType);
+        if( actionURL != '' && actionURL != undefined ) {
+            _this.addClass( 'loading' );
+            $.ajax({
+                type: 'POST',
+                url: actionURL,
+                data: formObj.serialize(),
+                success: function ( result ) {
+                    console.log( result );
+                    _this.removeClass( 'loading' );
+                    if( redirectVal != '' && redirectVal != undefined ) {
+                        window.location.href = redirectVal;
+                    } else {
+                        if ( typeof ( result ) !== 'undefined' && result !== null ) {
+                            result = $.parseJSON( result );
+                        }
+                        formObj.find( 'input[type=text],input[type=email],input[type=tel],input[type=password],textarea' ).each( function () {
+                            $( this ).val('');
+                            $( this ).removeClass( 'error' );
+                        });
+                        formObj.find( '.g-recaptcha' ).removeClass( 'error' );
+                        formObj.find( 'input[type=checkbox],input[type=radio]' ).prop( 'checked', false );
+                        if( formObj.find( '.g-recaptcha' ).length > 0 ) {
+                            grecaptcha.reset();
+                        }
+                        formObj.find( 'input[name=action],input[name=g-recaptcha-response]' ).remove();
+                        resultsObj.removeClass( 'alert-success' ).removeClass( 'alert-danger' ).hide();
+                        resultsObj.addClass( result.alert ).html( result.message );
+                        resultsObj.removeClass( 'd-none' ).fadeIn( 'slow' ).delay( 4000 ).fadeOut( 'slow' );
+                    }
+                }
+            });
         }
-      };
-      xhr.send(data);
     }
+
+})( jQuery );
